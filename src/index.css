@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-dark-bg text-slate-100 min-h-screen;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-dark-card/70 backdrop-blur-md border border-white/10;
+  }
+  
+  .transition-base {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  /* Custom scrollbar using Tailwind */
+  .custom-scrollbar {
+    @apply w-2 h-2;
+  }
+  
+  .custom-scrollbar-track {
+    @apply bg-dark-card;
+  }
+  
+  .custom-scrollbar-thumb {
+    @apply bg-slate-500 rounded;
+  }
+  
+  .custom-scrollbar-thumb:hover {
+    @apply bg-slate-400;
+  }
+  
+  /* Marker pulse animation */
+  .marker-pulse {
+    animation: marker-pulse 2s ease-out infinite;
+  }
+  
+  @keyframes marker-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+}
+
+/* Leaflet custom styles - must remain custom CSS */
+.leaflet-container {
+  background: #1e293b;
+  border-radius: 12px;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #1e293b;
+  color: #f1f5f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.leaflet-popup-tip {
+  background: #1e293b;
+}
