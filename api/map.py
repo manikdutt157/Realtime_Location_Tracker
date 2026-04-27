@@ -2,6 +2,10 @@ import folium
 import json
 import os
 
+from flask import Flask, Response, jsonify
+
+app = Flask(__name__)
+
 def create_map(data):
     """Create an interactive Folium map"""
     m = folium.Map(
@@ -40,16 +44,16 @@ def create_map(data):
     
     return m._repr_html_()
 
-def handler(req, res):
-    """Vercel serverless function for map"""
-    # Get the cached data from the locate endpoint
-    data_file = '/tmp/geo_cache.json'
-    
-    if os.path.exists(data_file):
-        with open(data_file, 'r') as f:
-            data = json.load(f)
-        html = create_map(data)
-        res.set_header('Content-Type', 'text/html')
-        return res.send(html)
-    else:
-        return res.status(400).json({"error": "Map not generated yet. Please locate an IP first."})
+@app.get("/")
+def handler():
+    # Cached data written by `api/locate.py`
+    data_file = "/tmp/geo_cache.json"
+
+    if not os.path.exists(data_file):
+        return jsonify({"error": "Map not generated yet. Please locate an IP first."}), 400
+
+    with open(data_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    html = create_map(data)
+    return Response(html, mimetype="text/html")
