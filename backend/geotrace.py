@@ -10,11 +10,13 @@ CORS(app)
 geo_cache = {}
 
 @app.route("/health")
+@app.route("/api/health")
 def health():
     """Health check endpoint"""
     return jsonify({"status": "healthy", "service": "GeoTrace API"})
 
 @app.route("/locate")
+@app.route("/api/locate")
 def locate():
     """Geolocate an IP address"""
     ip = request.args.get("ip")
@@ -100,6 +102,7 @@ def create_map(data):
     m.save("map.html")
 
 @app.route("/map")
+@app.route("/api/map")
 def get_map():
     try:
         return send_file("map.html")
